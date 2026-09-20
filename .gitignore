@@ -1,0 +1,5 @@
+# Ignored files
+.DS_Store
+BRAND*.md
+BRAND*.pdf
+*.log

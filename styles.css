@@ -1,17 +1,17 @@
 /* ==========================================================================
-   gee-companion · Ahotɔ Wellness Enterprise Design System
+   gee-companion Design System
    Native iOS Compact Mobile Survey & Lifestyle Companion
    ========================================================================== */
 
 :root {
-  /* Ahotɔ Wellness Core Palette */
-  --primary: #176B57;        /* Ahotɔ Green */
+  /* Core Palette */
+  --primary: #176B57;        /* Forest Green */
   --primary-tint: #1F836B;
   --primary-light: rgba(23, 107, 87, 0.10);
   --primary-pressed: #125444;
-  --accent: #D9A441;         /* Ahotɔ Gold */
+  --accent: #D9A441;         /* Warm Gold */
   --accent-light: rgba(217, 164, 65, 0.14);
-  --bg: #F7F3E8;             /* Ahotɔ Cream */
+  --bg: #F7F3E8;             /* Warm Cream */
   --surface: #FFFFFF;        /* White card / surface */
   --surface-2: #EFE9DC;      /* Inset surface / segmented fill */
   --surface-elevated: #FFFFFF;
@@ -136,7 +136,7 @@ body {
   flex-shrink: 0;
 }
 
-.ahoto-heart-svg {
+.heart-logo-svg, .ahoto-heart-svg {
   width: 100%;
   height: 100%;
   display: block;

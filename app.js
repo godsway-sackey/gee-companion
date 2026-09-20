@@ -1,7 +1,5 @@
-'use strict';
-
 /* ==========================================================================
-   gee-companion · Ahotɔ Wellness Enterprise
+   gee-companion
    Everyday Health. Everyday Wellness.
    Native iOS Mobile Companion with Step-by-Step Survey Logging
    ========================================================================== */
@@ -730,15 +728,36 @@ function runSurvey({ title = 'Log', eyebrow = 'Quick Log', steps = [], initialDa
 
   eyebrowEl.textContent = eyebrow;
 
+  function getNextIndex(fromIdx) {
+    for (let i = fromIdx + 1; i < steps.length; i++) {
+      if (!steps[i].skipIf || !steps[i].skipIf(data)) {
+        return i;
+      }
+    }
+    return steps.length;
+  }
+
+  function getPrevIndex(fromIdx) {
+    for (let i = fromIdx - 1; i >= 0; i--) {
+      if (!steps[i].skipIf || !steps[i].skipIf(data)) {
+        return i;
+      }
+    }
+    return 0;
+  }
+
   function renderStep(idx) {
     currentStep = idx;
     const step = steps[idx];
-    const total = steps.length;
+    const activeSteps = steps.filter(s => !s.skipIf || !s.skipIf(data));
+    const currentStepNum = activeSteps.indexOf(step) + 1;
+    const total = activeSteps.length;
 
     // Update Header Navigation
-    stepBadge.textContent = total > 1 ? `Step ${idx + 1} of ${total}` : '';
-    progressFill.style.width = `${((idx + 1) / total) * 100}%`;
-    backBtn.classList.toggle('hidden', idx === 0);
+    stepBadge.textContent = total > 1 ? `Step ${currentStepNum} of ${total}` : '';
+    progressFill.style.width = `${(currentStepNum / total) * 100}%`;
+    const prevIdx = getPrevIndex(idx);
+    backBtn.classList.toggle('hidden', idx === 0 || prevIdx === idx);
 
     // Build Question Body
     let contentHtml = `
@@ -845,7 +864,8 @@ function runSurvey({ title = 'Log', eyebrow = 'Quick Log', steps = [], initialDa
   }
 
   function bindStepEvents(step, idx, total) {
-    const isLast = idx === total - 1;
+    const nextIdx = getNextIndex(idx);
+    const isLast = nextIdx >= steps.length;
 
     // Segmented or Option Cards Tap Handlers
     $$('.ios-segment-btn, .tap-option-card').forEach(el => {
@@ -854,16 +874,22 @@ function runSurvey({ title = 'Log', eyebrow = 'Quick Log', steps = [], initialDa
         const val = el.dataset.val;
         data[step.id] = val;
 
+        if (step.id === 'starch' && val === 'None') {
+          data.starchType = 'None';
+        }
+
         // Visual selection indicator
         $$('.ios-segment-btn, .tap-option-card').forEach(c => c.classList.remove('active'));
         el.classList.add('active');
 
+        const nextStepIdx = getNextIndex(idx);
+
         // Smooth iOS auto-advance on tap
         setTimeout(() => {
-          if (isLast) {
+          if (nextStepIdx >= steps.length) {
             finishSurvey();
           } else {
-            renderStep(idx + 1);
+            renderStep(nextStepIdx);
           }
         }, 160);
       };
@@ -936,10 +962,11 @@ function runSurvey({ title = 'Log', eyebrow = 'Quick Log', steps = [], initialDa
     if (nextBtn) {
       nextBtn.onclick = () => {
         haptic(10);
-        if (isLast) {
+        const nextStepIdx = getNextIndex(idx);
+        if (nextStepIdx >= steps.length) {
           finishSurvey();
         } else {
-          renderStep(idx + 1);
+          renderStep(nextStepIdx);
         }
       };
     }
@@ -949,10 +976,11 @@ function runSurvey({ title = 'Log', eyebrow = 'Quick Log', steps = [], initialDa
     if (skipBtn) {
       skipBtn.onclick = () => {
         haptic(6);
-        if (isLast) {
+        const nextStepIdx = getNextIndex(idx);
+        if (nextStepIdx >= steps.length) {
           finishSurvey();
         } else {
-          renderStep(idx + 1);
+          renderStep(nextStepIdx);
         }
       };
     }
@@ -964,9 +992,10 @@ function runSurvey({ title = 'Log', eyebrow = 'Quick Log', steps = [], initialDa
   }
 
   backBtn.onclick = () => {
-    if (currentStep > 0) {
+    const prevIdx = getPrevIndex(currentStep);
+    if (currentStep > 0 && prevIdx < currentStep) {
       haptic(8);
-      renderStep(currentStep - 1);
+      renderStep(prevIdx);
     }
   };
 
@@ -1111,6 +1140,7 @@ function mealSurvey() {
         hint: 'Local dietary choices.',
         type: 'options',
         columns: 2,
+        skipIf: d => d.starch === 'None',
         options: [
           { label: 'Rice', value: 'Rice', icon: '🍚' },
           { label: 'Waakye', value: 'Waakye', icon: '🍲' },
@@ -1591,7 +1621,7 @@ function download(name, text, type = 'application/json') {
 function exportJSON() {
   download(`gee-companion-backup-${localDate()}.json`, JSON.stringify({
     version: 2,
-    brand: 'Ahotɔ Wellness Enterprise',
+    brand: 'gee-companion',
     profile: state.profile,
     prefs: state.prefs,
     records: state.records
