@@ -412,7 +412,7 @@ function todayView() {
 
     ${dss.length ? `
     <section>
-      <h2 class="section-title">Ahotɔ Guidance</h2>
+      <h2 class="section-title">Daily Guidance</h2>
       ${dss.map(([k, m]) => `<div class="alert ${k}">${esc(m)}</div>`).join('')}
     </section>` : ''}
   `;
@@ -550,7 +550,7 @@ function weeklyReviewHTML(s, p, change, score) {
   if (!opps.length) opps.push('Keep the established structure rather than making it overly restrictive.');
 
   return `
-    <h3 style="margin:0 0 6px;font-size:1.05rem;">Ahotɔ Weekly Note</h3>
+    <h3 style="margin:0 0 6px;font-size:1.05rem;">Weekly Note</h3>
     <p class="subtle">Evidence-grounded lifestyle review based entirely on your local records.</p>
     <div class="divider"></div>
     <b style="color:var(--primary);font-size:0.85rem;">What is working well</b>
@@ -574,7 +574,7 @@ function planView() {
 
   return `
     <section class="card">
-      <h2 class="section-title">Ahotɔ 30-Day Core Rules</h2>
+      <h2 class="section-title">30-Day Core Rules</h2>
       <ol style="margin:0;padding-left:18px;font-size:0.86rem;line-height:1.6;">
         <li>Start each morning with <b>500–600 mL water</b> before food.</li>
         <li>Power Black coffee or unsweetened tea early in the day.</li>
@@ -670,7 +670,7 @@ function moreView() {
     </section>
 
     <section class="card">
-      <h2 class="section-title">Ahotɔ Wellness Enterprise</h2>
+      <h2 class="section-title">About gee-companion</h2>
       <p class="subtle">Everyday Health. Everyday Wellness. Simple checks and smarter lifestyle habits.</p>
       <div class="alert ok" style="margin-top:10px;">
         <b>Local & Private:</b> No external cloud servers or tracking. Works entirely offline after first installation.
@@ -1024,7 +1024,7 @@ function quick(action) {
 function mealSurvey() {
   runSurvey({
     title: 'Log Meal',
-    eyebrow: 'Ahotɔ Meal Tracker',
+    eyebrow: 'Meal Tracker',
     initialData: {
       meal: 'Meal 1',
       protein: 'Fish',
@@ -1274,7 +1274,7 @@ function walkSurvey() {
       {
         id: 'postMeal',
         question: 'Was this after a main meal?',
-        hint: 'Post-meal walking is a core foundation of the Ahotɔ plan.',
+        hint: 'Post-meal walking is a core routine habit.',
         type: 'options',
         columns: 1,
         options: [
@@ -1439,7 +1439,7 @@ function coffeeSurvey() {
         type: 'options',
         columns: 1,
         options: [
-          { label: 'Edmark Power Black', value: 'Edmark Power Black', icon: '☕', desc: 'Ahotɔ recommended unsweetened' },
+          { label: 'Edmark Power Black', value: 'Edmark Power Black', icon: '☕', desc: 'Unsweetened black coffee' },
           { label: 'Other Black Coffee', value: 'Other black coffee', icon: '☕', desc: 'No added milk or sugar' },
           { label: 'Other Coffee', value: 'Other coffee', icon: '☕', desc: 'With milk or other additions' }
         ]
