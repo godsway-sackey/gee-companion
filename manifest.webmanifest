@@ -1,0 +1,15 @@
+{
+  "name": "gee-companion — Ahotɔ Wellness",
+  "short_name": "gee-companion",
+  "description": "Everyday Health. Everyday Wellness. A private, local-first daily wellness and health companion.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F7F3E8",
+  "theme_color": "#176B57",
+  "icons": [
+    {"src":"icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}

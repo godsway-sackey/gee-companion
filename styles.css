@@ -1,0 +1,1189 @@
+/* ==========================================================================
+   gee-companion · Ahotɔ Wellness Enterprise Design System
+   Native iOS Compact Mobile Survey & Lifestyle Companion
+   ========================================================================== */
+
+:root {
+  /* Ahotɔ Wellness Core Palette */
+  --primary: #176B57;        /* Ahotɔ Green */
+  --primary-tint: #1F836B;
+  --primary-light: rgba(23, 107, 87, 0.10);
+  --primary-pressed: #125444;
+  --accent: #D9A441;         /* Ahotɔ Gold */
+  --accent-light: rgba(217, 164, 65, 0.14);
+  --bg: #F7F3E8;             /* Ahotɔ Cream */
+  --surface: #FFFFFF;        /* White card / surface */
+  --surface-2: #EFE9DC;      /* Inset surface / segmented fill */
+  --surface-elevated: #FFFFFF;
+  --text: #26332F;           /* Charcoal */
+  --muted: #5E716B;          /* Supporting muted text */
+  --muted-light: #8E9E99;
+  --border: #E2DACB;         /* Hairline borders */
+  --border-subtle: rgba(38, 51, 47, 0.08);
+
+  /* Semantic Health Status Colors */
+  --ok: #176B57;
+  --ok-bg: rgba(23, 107, 87, 0.12);
+  --warn: #C98B22;
+  --warn-bg: rgba(217, 164, 65, 0.15);
+  --danger: #B83A3A;
+  --danger-bg: rgba(184, 58, 58, 0.12);
+
+  /* iOS Metric Radii & Tokens */
+  --radius-xl: 22px;
+  --radius: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --shadow-sm: 0 1px 3px rgba(38, 51, 47, 0.04);
+  --shadow-card: 0 4px 14px rgba(38, 51, 47, 0.05);
+  --shadow-sheet: 0 -10px 40px rgba(0, 0, 0, 0.18);
+  --safe-bottom: max(12px, env(safe-area-inset-bottom));
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101815;             /* Deep Charcoal Forest */
+    --surface: #182320;        /* Secondary System Background */
+    --surface-2: #212F2B;      /* Inset Grouped Background */
+    --surface-elevated: #243530;
+    --text: #F7F3E8;           /* Ahotɔ Cream Text */
+    --muted: #9BB0A8;
+    --muted-light: #6C7F78;
+    --primary: #34AF8E;        /* Vibrant Ahotɔ Green for dark surfaces */
+    --primary-tint: #43C09F;
+    --primary-light: rgba(52, 175, 142, 0.16);
+    --primary-pressed: #2B9679;
+    --accent: #E5B757;         /* Radiant Ahotɔ Gold */
+    --accent-light: rgba(229, 183, 87, 0.18);
+    --border: #2C3D37;
+    --border-subtle: rgba(255, 255, 255, 0.07);
+    --ok: #34AF8E;
+    --ok-bg: rgba(52, 175, 142, 0.15);
+    --warn: #E5B757;
+    --warn-bg: rgba(229, 183, 87, 0.15);
+    --danger: #E05C5C;
+    --danger-bg: rgba(224, 92, 92, 0.18);
+    --shadow-sm: none;
+    --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.35);
+    --shadow-sheet: 0 -10px 45px rgba(0, 0, 0, 0.65);
+  }
+}
+
+/* ==========================================================================
+   Base & Reset (Native iOS feel)
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Nunito Sans", Nunito, system-ui, -apple-system-body, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.4;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+}
+
+/* App Shell */
+.app-shell {
+  max-width: 680px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-bottom: calc(88px + var(--safe-bottom));
+  position: relative;
+}
+
+/* ==========================================================================
+   Top Header (Ahotɔ Brand & Navigation)
+   ========================================================================== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: calc(10px + var(--safe-top)) 18px 10px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 0.5px solid var(--border-subtle);
+}
+
+.brand-cluster {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo {
+  width: 38px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 2px 4px rgba(217, 164, 65, 0.25));
+  flex-shrink: 0;
+}
+
+.ahoto-heart-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.brand-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.app-brand-name {
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--primary);
+}
+
+.brand-pill {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--accent-light);
+  color: var(--accent);
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 0.5px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.eyebrow {
+  margin: 1px 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.page-title-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 14px 18px 6px;
+}
+
+.page-title-banner h1 {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.offline-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--ok-bg);
+  color: var(--ok);
+  border: 0.5px solid var(--border);
+}
+
+.ios-install-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--surface-2);
+  color: var(--primary);
+  border: 0.5px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.ios-install-btn:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================================================
+   Main View Container & Grouped Cards
+   ========================================================================== */
+.view {
+  padding: 6px 16px 28px;
+}
+
+.card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 16px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hero Milestone Card */
+.hero {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 18px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.metric-big {
+  font-size: 2.25rem;
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--primary);
+}
+
+.metric-unit {
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+/* Next Action iOS Banner */
+.next-card {
+  background: linear-gradient(135deg, var(--primary), var(--primary-tint));
+  color: #FFFFFF;
+  border: none;
+  padding: 16px 18px;
+}
+
+.next-card .eyebrow {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.next-card h2 {
+  margin: 3px 0 5px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.next-card p {
+  margin: 0 0 12px;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.next-card .secondary-btn {
+  background: #FFFFFF;
+  color: var(--primary);
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  font-weight: 800;
+}
+
+/* Mini Cards & Grids */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.mini-card {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  border: 0.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mini-card .label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.mini-card .value {
+  font-size: 1.12rem;
+  font-weight: 850;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.kpi {
+  font-size: 1.45rem;
+  font-weight: 850;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+}
+
+/* iOS Progress Track */
+.progress {
+  height: 8px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 999px;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-title {
+  font-size: 0.96rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin: 14px 2px 8px;
+}
+
+.subtle {
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin: 4px 0 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   Quick Log Grid & Native iOS Buttons
+   ========================================================================== */
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.quick-btn {
+  appearance: none;
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 10px 8px;
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  color: var(--text);
+  transition: transform 0.12s ease, background-color 0.15s ease, border-color 0.15s ease;
+  user-select: none;
+}
+
+.quick-btn span {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.quick-btn b {
+  font-size: 0.74rem;
+  font-weight: 750;
+  text-align: center;
+  color: var(--text);
+}
+
+.quick-btn:active {
+  transform: scale(0.95);
+  background: var(--surface-2);
+  border-color: var(--primary);
+}
+
+.primary-btn, .secondary-btn, .ghost-btn, .danger-btn {
+  appearance: none;
+  border: 0;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: transform 0.12s ease, opacity 0.15s ease;
+  user-select: none;
+  text-align: center;
+}
+
+.primary-btn {
+  background: var(--primary);
+  color: #FFFFFF;
+}
+
+.primary-btn:active {
+  transform: scale(0.97);
+  background: var(--primary-pressed);
+}
+
+.secondary-btn {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 0.5px solid var(--border);
+}
+
+.secondary-btn:active {
+  transform: scale(0.97);
+  background: color-mix(in srgb, var(--surface-2) 80%, var(--primary));
+}
+
+.ghost-btn {
+  background: transparent;
+  color: var(--primary);
+  border: 0.5px solid var(--border);
+}
+
+.ghost-btn:active {
+  transform: scale(0.97);
+  background: var(--primary-light);
+}
+
+.danger-btn {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 0.5px solid color-mix(in srgb, var(--danger) 30%, transparent);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 999px;
+  padding: 4px 8px;
+  background: var(--surface-2);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.pill.ok { color: var(--ok); background: var(--ok-bg); }
+.pill.warn { color: var(--warn); background: var(--warn-bg); }
+.pill.danger { color: var(--danger); background: var(--danger-bg); }
+
+/* Alerts / Guidance */
+.alert {
+  border-left: 4px solid var(--accent);
+  padding: 10px 12px;
+  background: var(--accent-light);
+  border-radius: var(--radius-sm);
+  margin: 8px 0;
+  font-size: 0.84rem;
+}
+
+.alert.ok {
+  border-left-color: var(--ok);
+  background: var(--ok-bg);
+}
+
+.alert.danger {
+  border-left-color: var(--danger);
+  background: var(--danger-bg);
+}
+
+/* ==========================================================================
+   iOS Native Tab Bar
+   ========================================================================== */
+.bottom-nav {
+  position: fixed;
+  z-index: 40;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(680px, 100%);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 6px 4px var(--safe-bottom);
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-top: 0.5px solid var(--border);
+}
+
+.nav-item {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  border-radius: var(--radius-md);
+  padding: 5px 2px 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.12s ease;
+  user-select: none;
+}
+
+.tab-icon {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  transition: transform 0.15s ease;
+}
+
+.nav-item small {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.nav-item.active {
+  color: var(--primary);
+}
+
+.nav-item.active .tab-icon {
+  stroke-width: 2.4;
+  transform: translateY(-1px);
+}
+
+.nav-item.active small {
+  font-weight: 800;
+}
+
+.nav-item:active {
+  transform: scale(0.92);
+}
+
+/* ==========================================================================
+   iOS Mobile Survey Modal (One-by-One Question Flow)
+   ========================================================================== */
+.ios-sheet {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  width: min(600px, 100%);
+  margin: auto auto 0 auto;
+  max-height: 94vh;
+  outline: none;
+}
+
+.ios-sheet::backdrop {
+  background: rgba(16, 24, 21, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.sheet-container {
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  border: 0.5px solid var(--border);
+  box-shadow: var(--shadow-sheet);
+  display: flex;
+  flex-direction: column;
+  max-height: 92vh;
+  animation: slideUpSheet 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+@keyframes slideUpSheet {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.sheet-handle {
+  width: 36px;
+  height: 4.5px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--muted) 35%, transparent);
+  margin: 8px auto 4px;
+}
+
+.sheet-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px 6px;
+  position: relative;
+  min-height: 40px;
+}
+
+.sheet-nav-btn {
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  font-size: 0.86rem;
+  font-weight: 750;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+.sheet-nav-btn:active {
+  background: var(--primary-light);
+}
+
+.sheet-title-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.sheet-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sheet-step-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.sheet-close-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: var(--surface-2);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.sheet-close-btn:active {
+  transform: scale(0.9);
+}
+
+/* Survey Step Progress Bar */
+.survey-progress-track {
+  width: 100%;
+  height: 3px;
+  background: var(--surface-2);
+  position: relative;
+}
+
+.survey-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dynamic Survey Body */
+.sheet-body {
+  padding: 16px 18px 20px;
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Survey Step Layout */
+.survey-step {
+  animation: surveyStepIn 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes surveyStepIn {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.survey-question-head {
+  margin-bottom: 14px;
+}
+
+.survey-question-title {
+  margin: 0 0 4px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.survey-question-hint {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ==========================================================================
+   TAP OPTIONS (Turning all dropdowns into native tap selections)
+   ========================================================================== */
+
+/* Native iOS Segmented Control */
+.ios-segmented {
+  display: flex;
+  background: var(--surface-2);
+  padding: 3px;
+  border-radius: 10px;
+  border: 0.5px solid var(--border);
+  gap: 2px;
+  margin: 8px 0;
+}
+
+.ios-segment-btn {
+  flex: 1;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 9px 8px;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  text-align: center;
+  user-select: none;
+}
+
+.ios-segment-btn.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-weight: 800;
+}
+
+/* Grid of Tap Cards */
+.tap-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 9px;
+  margin: 10px 0;
+}
+
+.tap-options-grid.cols-1 {
+  grid-template-columns: 1fr;
+}
+
+.tap-options-grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.tap-option-card {
+  appearance: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.1s ease, border-color 0.15s ease, background-color 0.15s ease;
+  user-select: none;
+}
+
+.tap-option-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tap-option-title {
+  font-size: 0.88rem;
+  font-weight: 750;
+  color: var(--text);
+}
+
+.tap-option-desc {
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.tap-option-icon {
+  font-size: 1.15rem;
+  margin-right: 4px;
+}
+
+.tap-option-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.tap-option-card.active {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.tap-option-card.active .tap-option-title {
+  color: var(--primary);
+}
+
+.tap-option-card.active .tap-option-check {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #FFFFFF;
+}
+
+.tap-option-card:active {
+  transform: scale(0.97);
+}
+
+/* Numeric Stepper Input with Quick Tap Presets */
+.stepper-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.stepper-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 1.4rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.stepper-btn:active {
+  transform: scale(0.9);
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.stepper-value-wrap {
+  text-align: center;
+  min-width: 110px;
+}
+
+.stepper-number-input {
+  width: 120px;
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 850;
+  letter-spacing: -0.02em;
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  padding: 0;
+}
+
+.stepper-number-input:focus {
+  outline: none;
+}
+
+.stepper-unit {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--muted);
+  display: block;
+}
+
+.quick-presets-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.preset-chip {
+  appearance: none;
+  background: var(--surface-2);
+  border: 0.5px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 750;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.preset-chip.active {
+  background: var(--primary);
+  color: #FFFFFF;
+  border-color: var(--primary);
+}
+
+.preset-chip:active {
+  transform: scale(0.95);
+}
+
+/* iOS Toggle List Item */
+.ios-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.ios-toggle-row input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+/* Survey Footer */
+.sheet-footer {
+  padding: 10px 18px calc(14px + var(--safe-bottom));
+  border-top: 0.5px solid var(--border-subtle);
+  display: flex;
+  gap: 10px;
+  background: var(--surface);
+}
+
+.sheet-footer > * {
+  flex: 1;
+}
+
+/* Notes Textarea */
+.ios-textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 0.9rem;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  min-height: 80px;
+  resize: none;
+}
+
+.ios-textarea:focus {
+  outline: 2px solid var(--primary);
+  background: var(--surface);
+}
+
+/* Log History Items */
+.log-item {
+  padding: 11px 0;
+  border-bottom: 0.5px solid var(--border-subtle);
+}
+
+.log-item:last-child {
+  border-bottom: 0;
+}
+
+.log-item h4 {
+  margin: 0 0 3px;
+  font-size: 0.94rem;
+  font-weight: 750;
+}
+
+.log-item p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+/* Chart Wrap */
+.chart-wrap {
+  height: 240px;
+  position: relative;
+  margin: 8px 0;
+}
+
+.chart-wrap canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.legend {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 0.74rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.legend i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--primary);
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.legend i.alt {
+  background: var(--accent);
+}
+
+/* Tables */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+
+.table th, .table td {
+  text-align: left;
+  padding: 8px 6px;
+  border-bottom: 0.5px solid var(--border-subtle);
+}
+
+.table th {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  z-index: 60;
+  left: 50%;
+  bottom: calc(74px + var(--safe-bottom));
+  transform: translate(-50%, 15px);
+  background: var(--text);
+  color: var(--bg);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 750;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  max-width: calc(100% - 32px);
+  text-align: center;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* Utilities */
+.hidden {
+  display: none !important;
+}
+
+.divider {
+  height: 0.5px;
+  background: var(--border);
+  margin: 12px 0;
+}
+
+.workout-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--border-subtle);
+}
+
+.workout-row:last-child {
+  border-bottom: 0;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  background: var(--muted-light);
+}
+
+.status-dot.ok {
+  background: var(--ok);
+}
+
+.status-dot.warn {
+  background: var(--warn);
+}
+
+/* Responsive tweaks */
+@media (max-width: 420px) {
+  .quick-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .tap-options-grid.cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .page-title-banner h1 {
+    font-size: 1.5rem;
+  }
+}
